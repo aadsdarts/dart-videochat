@@ -1,4 +1,4 @@
-// State Management
+﻿// State Management
 let state = {
     roomCode: null,
     localStream: null,
@@ -480,7 +480,9 @@ function setupRealtimeChannel() {
 // Create or join room in Supabase
 async function createOrJoinRoom() {
     try {
-        // Skip REST API query - use Realtime only`nconst room = null; const error = { code: "PGRST116" };
+        // Skip REST API query - use Realtime only
+        const room = null; 
+        const error = { code: "PGRST116" };
 
         if (error && error.code === 'PGRST116') {
             // Room doesn't exist, create it and become initiator
@@ -762,7 +764,7 @@ function handleToggleAudio() {
     const audioTrack = state.localStream.getAudioTracks()[0];
     if (audioTrack) {
         audioTrack.enabled = !audioTrack.enabled;
-        toggleAudioBtn.textContent = audioTrack.enabled ? '🔇 Mute' : '🔊 Unmute';
+        toggleAudioBtn.textContent = audioTrack.enabled ? 'ðŸ”‡ Mute' : 'ðŸ”Š Unmute';
         showNotification(audioTrack.enabled ? 'Microphone unmuted' : 'Microphone muted', 'info');
     }
 }
@@ -774,7 +776,7 @@ function handleToggleVideo() {
     const videoTrack = state.localStream.getVideoTracks()[0];
     if (videoTrack) {
         videoTrack.enabled = !videoTrack.enabled;
-        toggleVideoBtn.textContent = videoTrack.enabled ? '📹 Hide Video' : '📹 Show Video';
+        toggleVideoBtn.textContent = videoTrack.enabled ? 'ðŸ“¹ Hide Video' : 'ðŸ“¹ Show Video';
         localVideo.style.opacity = videoTrack.enabled ? '1' : '0.3';
         showNotification(videoTrack.enabled ? 'Camera enabled' : 'Camera disabled', 'info');
     }
@@ -789,4 +791,5 @@ function showNotification(message, type = 'info') {
         notification.classList.remove('show');
     }, 5000);
 }
+
 
