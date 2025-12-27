@@ -497,7 +497,7 @@ async function createOrJoinRoom() {
 
             if (insertError) {
                 // If duplicate key, room exists - join as responder
-                if (insertError.code === '23505') {
+                if (insertError.code === '23505' || insertError.code === '409' || insertError.message?.includes('duplicate') || insertError.message?.includes('Conflict')) {
                     console.log('Room already exists, joining as responder');
                     state.isInitiator = false;
                 } else {
@@ -801,6 +801,7 @@ function showNotification(message, type = 'info') {
         notification.classList.remove('show');
     }, 5000);
 }
+
 
 
 
