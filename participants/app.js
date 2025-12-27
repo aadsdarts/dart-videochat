@@ -480,11 +480,7 @@ function setupRealtimeChannel() {
 // Create or join room in Supabase
 async function createOrJoinRoom() {
     try {
-        const { data: room, error } = await supabaseClient
-            .from('rooms')
-            .select('*')
-            .eq('room_code', state.roomCode)
-            .single();
+        // Skip REST API query - use Realtime only`nconst room = null; const error = { code: "PGRST116" };
 
         if (error && error.code === 'PGRST116') {
             // Room doesn't exist, create it and become initiator
@@ -793,3 +789,4 @@ function showNotification(message, type = 'info') {
         notification.classList.remove('show');
     }, 5000);
 }
+
