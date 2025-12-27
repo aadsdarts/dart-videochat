@@ -495,8 +495,18 @@ async function createOrJoinRoom() {
                 }])
                 .select();
 
-            if (insertError) throw insertError;
-            state.isInitiator = true;
+            if (insertError) {
+                // If duplicate key, room exists - join as responder
+                if (insertError.code === '23505') {
+                    console.log('Room already exists, joining as responder');
+                    state.isInitiator = false;
+                } else {
+                    throw insertError;
+                }
+            } else {
+                // Successfully created room - become initiator
+                state.isInitiator = true;
+            }
         } else if (room) {
             // Room exists: if inactive, reactivate and become initiator; otherwise join as responder
             if (!room.is_active) {
@@ -791,5 +801,6 @@ function showNotification(message, type = 'info') {
         notification.classList.remove('show');
     }, 5000);
 }
+
 
 
